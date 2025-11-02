@@ -635,7 +635,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
         className="w-full h-full"
         style={{ display: "block" }}
       />
-      <div className="absolute bottom-4 right-4 text-xs text-gray-400 px-3 py-2 rounded-lg bg-[#111111]/80 backdrop-blur-sm border border-gray-800">
+      <div className="absolute bottom-4 right-4 text-xs text-emerald-200/70 px-3 py-2 rounded-lg bg-[#031a15]/80 backdrop-blur-sm border border-emerald-500/20">
         Drag to rotate • Scroll to zoom
       </div>
       
@@ -647,24 +647,24 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
             top: `${tooltip.y - 80}px`,
           }}
         >
-          <div className="bg-[#111111]/95 backdrop-blur-sm border border-cyan-500/30 rounded-lg p-4 shadow-2xl min-w-[280px]">
+          <div className="bg-[#031a15]/95 backdrop-blur-sm border border-emerald-500/30 rounded-lg p-4 shadow-2xl min-w-[280px]">
             <div className="flex items-start gap-3 mb-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                 </svg>
               </div>
               <div>
-                <div className="text-xs text-cyan-400 font-medium mb-1">Region</div>
-                <div className="text-white font-semibold">{tooltip.region.name}</div>
+                <div className="text-xs text-emerald-400 font-medium mb-1">Region</div>
+                <div className="text-emerald-50 font-semibold">{tooltip.region.name}</div>
               </div>
             </div>
             
             <div className="space-y-2">
-              <div className="text-sm text-gray-300 font-medium">Region Details:</div>
+              <div className="text-sm text-emerald-200/80 font-medium">Region Details:</div>
               {tooltip.region.info.map((item, idx) => (
-                <div key={idx} className="text-sm text-gray-400 flex items-start gap-2">
-                  <span className="text-cyan-400 mt-0.5">•</span>
+                <div key={idx} className="text-sm text-emerald-200/70 flex items-start gap-2">
+                  <span className="text-emerald-400 mt-0.5">•</span>
                   <span>{item}</span>
                 </div>
               ))}

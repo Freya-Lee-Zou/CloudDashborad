@@ -286,10 +286,10 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
 
             {/* Resize Handle */}
             <div
-              className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-cyan-500/30 transition-colors group z-20"
+              className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-emerald-500/30 transition-colors group z-20"
               onMouseDown={handleMouseDown}
             >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-16 bg-gray-700 group-hover:bg-cyan-500 transition-colors rounded-full shadow-lg" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-16 bg-emerald-700 group-hover:bg-emerald-500 transition-colors rounded-full shadow-lg" />
             </div>
           </>
         )}
@@ -312,9 +312,9 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
       </button>
 
       {/* Globe Container - Full Screen */}
-      <div className="flex-1 relative h-screen bg-[#0a0a0a]">
+      <div className="flex-1 relative h-screen bg-[#010b13]">
         {/* Selected Regions Info Cards */}
-        <div className="absolute top-4 left-4 right-4 z-10 flex flex-wrap gap-3 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-500/50 scrollbar-track-transparent">
+        <div className="absolute top-4 left-4 right-4 z-10 flex flex-wrap gap-3 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-emerald-500/50 scrollbar-track-transparent">
           {Array.from(selectedRegions).map((code, index) => {
             const region = regions.find(r => r.code === code)
             if (!region) return null
@@ -323,7 +323,7 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
               <div
                 key={code}
                 ref={isMainSelected ? modalRef : null}
-                className="bg-[#111111]/95 backdrop-blur-sm border-2 border-cyan-500 rounded-lg p-4 shadow-2xl min-w-[280px] max-w-[320px] relative animate-in slide-in-from-top-4 duration-300"
+                className="bg-[#031a15]/95 backdrop-blur-sm border-2 border-emerald-500 rounded-lg p-4 shadow-2xl min-w-[280px] max-w-[320px] relative animate-in slide-in-from-top-4 duration-300"
                 style={{
                   boxShadow: '0 0 50px rgba(34, 211, 238, 0.6), 0 0 30px rgba(34, 211, 238, 0.4), 0 0 15px rgba(34, 211, 238, 0.3)',
                   animationDelay: `${index * 50}ms`
@@ -335,24 +335,24 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
                       {getCountryFlag(region.country)}
                     </div>
                   ) : (
-                    <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
                       <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                       </svg>
                     </div>
                   )}
                   <div className="flex-1">
-                    <div className="text-xs text-cyan-400 font-medium mb-1">Region</div>
-                    <div className="text-white font-semibold">{region.name}</div>
+                    <div className="text-xs text-emerald-400 font-medium mb-1">Region</div>
+                    <div className="text-emerald-50 font-semibold">{region.name}</div>
                     {getAwsRegionId(region) && (
-                      <div className="text-sm text-cyan-400 font-mono mt-1">{getAwsRegionId(region)}</div>
+                      <div className="text-sm text-emerald-400 font-mono mt-1">{getAwsRegionId(region)}</div>
                     )}
-                    <div className="text-xs text-gray-400 font-mono mt-0.5">{region.code}</div>
+                    <div className="text-xs text-emerald-200/70 font-mono mt-0.5">{region.code}</div>
                   </div>
                   <div className="flex gap-1">
                     <button
                       onClick={() => setDetailsPanelRegion(region)}
-                      className="text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/10 rounded p-1.5 transition-all cursor-pointer hover:scale-110 active:scale-95"
+                      className="text-emerald-300/80 hover:text-emerald-200 hover:bg-emerald-500/10 rounded p-1.5 transition-all cursor-pointer hover:scale-110 active:scale-95"
                       title="View details"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -368,7 +368,7 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
                           setSelectedRegion(null)
                         }
                       }}
-                      className="text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded p-1.5 transition-all cursor-pointer hover:scale-110 active:scale-95"
+                      className="text-emerald-200/70 hover:text-red-400 hover:bg-red-500/10 rounded p-1.5 transition-all cursor-pointer hover:scale-110 active:scale-95"
                       title="Remove"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -379,10 +379,10 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
                 </div>
                 
                 <div className="space-y-2">
-                  <div className="text-sm text-cyan-400 font-medium">Region Details:</div>
+                  <div className="text-sm text-emerald-400 font-medium">Region Details:</div>
                   {region.info.map((item, idx) => (
-                    <div key={idx} className="text-sm text-gray-300 flex items-start gap-2">
-                      <span className="text-cyan-400 mt-0.5">•</span>
+                    <div key={idx} className="text-sm text-emerald-200/80 flex items-start gap-2">
+                      <span className="text-emerald-400 mt-0.5">•</span>
                       <span>{item}</span>
                     </div>
                   ))}

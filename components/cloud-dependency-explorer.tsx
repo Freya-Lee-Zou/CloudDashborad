@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useRef, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { companies as defaultCompanies, type Company } from "@/lib/company-data"
@@ -18,6 +18,19 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
   const [newCompanyUrl, setNewCompanyUrl] = useState("")
   const [isDetecting, setIsDetecting] = useState(false)
   const [detectionError, setDetectionError] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!menuRef.current) return
+      if (!menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('click', onDocClick)
+    return () => document.removeEventListener('click', onDocClick)
+  }, [])
 
   // Combine default and custom companies
   const allCompanies = useMemo(() => {
@@ -165,17 +178,57 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
         {/* Header */}
         <div className="relative mb-6 px-4 pt-12 text-center sm:pt-16">
           {onOpenRegions && (
-            <button
-              onClick={onOpenRegions}
-              className="absolute right-4 top-2 z-10 flex items-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-3 py-2 font-semibold text-emerald-100 transition-all hover:-translate-y-0.5 hover:border-emerald-400/70 hover:bg-emerald-500/25 hover:text-emerald-50 hover:shadow-[0_15px_35px_rgba(57,255,159,0.25)] sm:right-8 sm:top-4 sm:px-4"
-              title="Explore AWS Regions"
-            >
-              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="hidden sm:inline">AWS Regions</span>
-              <span className="sm:hidden">Regions</span>
-            </button>
+            <div ref={menuRef} className="absolute right-4 top-2 z-20 sm:right-8 sm:top-4">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => onOpenRegions?.()}
+                  className="flex items-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-3 py-2 font-semibold text-emerald-100 transition-all hover:-translate-y-0.5 hover:border-emerald-400/70 hover:bg-emerald-500/25 hover:text-emerald-50 hover:shadow-[0_15px_35px_rgba(57,255,159,0.25)] sm:px-4"
+                  title="Explore Cloud Regions"
+                >
+                  <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="hidden sm:inline">Cloud Regions</span>
+                  <span className="sm:hidden">Regions</span>
+                </button>
+                <button
+                  aria-label="Choose cloud provider"
+                  onClick={() => setMenuOpen((v) => !v)}
+                  className="rounded-lg border border-emerald-400/40 bg-emerald-500/15 p-2 text-emerald-100 transition-colors hover:border-emerald-400/70 hover:bg-emerald-500/25"
+                >
+                  <svg className={`h-4 w-4 transition-transform ${menuOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.127l3.71-3.896a.75.75 0 111.08 1.04l-4.24 4.46a.75.75 0 01-1.08 0l-4.24-4.46a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+              {menuOpen && (
+                <div className="mt-2 min-w-[200px] rounded-lg border border-emerald-500/30 bg-[#031a15]/95 p-1 text-sm text-emerald-100 shadow-2xl">
+                  {[
+                    { label: 'AWS', key: 'aws', enabled: true },
+                    { label: 'Azure', key: 'azure', enabled: false },
+                    { label: 'Google Cloud', key: 'gcp', enabled: false },
+                    { label: 'Oracle', key: 'oracle', enabled: false },
+                    { label: 'Alibaba', key: 'alibaba', enabled: false },
+                  ].map((item) => (
+                    <button
+                      key={item.key}
+                      onClick={() => {
+                        setMenuOpen(false)
+                        if (item.enabled) onOpenRegions?.()
+                      }}
+                      disabled={!item.enabled}
+                      className={`w-full text-left rounded-md px-3 py-2 transition-colors ${
+                        item.enabled
+                          ? 'hover:bg-emerald-500/15 hover:text-emerald-50'
+                          : 'opacity-50 cursor-not-allowed'
+                      }`}
+                    >
+                      {item.label}{!item.enabled && ' • coming soon'}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
           <h1 className="mb-3 break-words text-4xl font-black tracking-tight text-emerald-100 sm:text-5xl lg:text-6xl">
             Who Controls <span className="text-[#39ff9f]">The Internet?</span>
