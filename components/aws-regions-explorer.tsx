@@ -224,7 +224,7 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
             ) : (
               filteredRegions.map((region) => (
                 <button
-                  key={region.code}
+                  key={`${region.code}-${region.name}`}
                   onClick={(e) => handleRegionClick(region, e)}
                   className={`group w-full text-left p-4 rounded-lg mb-2 transition-all cursor-pointer ${
                     selectedRegions.has(region.code)
@@ -321,7 +321,7 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
             const isMainSelected = selectedRegion?.code === code
             return (
               <div
-                key={code}
+                key={`${code}-${region.name}`}
                 ref={isMainSelected ? modalRef : null}
                 className="bg-[#031a15]/95 backdrop-blur-sm border-2 border-emerald-500 rounded-lg p-4 shadow-2xl min-w-[280px] max-w-[320px] relative animate-in slide-in-from-top-4 duration-300"
                 style={{
