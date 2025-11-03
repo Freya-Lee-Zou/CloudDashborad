@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import RotatingEarth from "@/components/rotating-earth"
-import RegionDetailsPanel from "@/components/region-details-panel"
+import RotatingEarth from "./rotating-earth"
+import RegionDetailsPanel from "./region-details-panel"
 
 interface AWSRegion {
   name: string

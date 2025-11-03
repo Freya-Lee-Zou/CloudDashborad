@@ -1,9 +1,9 @@
 "use client"
 
 import { useState, useMemo, useRef, useEffect } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { companies as defaultCompanies, type Company } from "@/lib/company-data"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { companies as defaultCompanies, type Company } from "../lib/company-data"
 import { Search, Plus, Loader2, X } from "lucide-react"
 import { PieChart, Pie, Cell, ResponsiveContainer, Treemap, Tooltip, Legend } from "recharts"
 
