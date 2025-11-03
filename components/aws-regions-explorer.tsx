@@ -223,9 +223,18 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
               </div>
             ) : (
               filteredRegions.map((region) => (
-                <button
+                <div
+                  role="button"
+                  tabIndex={0}
                   key={`${region.code}-${region.name}`}
                   onClick={(e) => handleRegionClick(region, e)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      // @ts-ignore - align with onClick signature
+                      handleRegionClick(region, (e as unknown) as React.MouseEvent)
+                    }
+                  }}
                   className={`group w-full text-left p-4 rounded-lg mb-2 transition-all cursor-pointer ${
                     selectedRegions.has(region.code)
                       ? "bg-emerald-500/15 border border-emerald-500/40 shadow-lg shadow-emerald-500/15"
@@ -264,7 +273,7 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
                       </svg>
                     </button>
                   </div>
-                </button>
+                </div>
               ))
             )}
           </div>
